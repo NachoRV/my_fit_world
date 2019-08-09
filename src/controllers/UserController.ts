@@ -8,18 +8,16 @@ class UserController{
 
 static listAll = async (req: Request, res: Response) => {
   //Get users from database
- /**  const userRepository = getRepository(User);
+ const userRepository = getRepository(User);
   const users = await userRepository.find({
     select: ["id", "username", "role"] //We dont want to send the passwords on response
   });
-  
-   * 
-   */
-  const users = await 
-    getRepository(User)
-    .createQueryBuilder("user")
-    .leftJoinAndSelect("user.peso", "registro_peso")
-    .getMany();
+  // PARA RECUPERAR TODOS LOS USUARIOS Y SUS pesos
+  // const users = await 
+  //   getRepository(User)
+  //   .createQueryBuilder("user")
+  //   .leftJoinAndSelect("user.peso", "registro_peso")
+  //   .getMany();
   //Send the users object
   res.send(users);
 };
@@ -34,6 +32,15 @@ static getOneById = async (req: Request, res: Response) => {
     const user = await userRepository.findOneOrFail(id, {
       select: ["id", "username", "role"] //We dont want to send the password on response
     });
+    const users = await 
+     getRepository(User)
+     .createQueryBuilder("user")
+     .leftJoinAndSelect("user.peso", "registro_peso")
+     .where("user.id = :id", { id: id })
+     .getMany();
+
+    res.send(users);
+
   } catch (error) {
     res.status(404).send("User not found");
   }
