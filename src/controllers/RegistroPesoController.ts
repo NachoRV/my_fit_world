@@ -14,6 +14,7 @@ class RegistroPesoController {
       };
 
     static add = async (req: Request, res: Response) => {
+
         let { fecha, peso, g_bisceral, grasa, musculo, user } = req.body;
         
 
@@ -23,17 +24,18 @@ class RegistroPesoController {
         rp.grasa = grasa;
         rp.musculo = musculo;
         rp.peso = peso;
-        rp.user = user;
+        rp.user = res.locals.jwtPayload.userId;
+        console.info(rp);
         const userRepository = getRepository(Registro_peso);
         try {
           await userRepository.save(rp);
         } catch (e) {
-          res.status(409).send("username already in use");
+          res.status(409).send("error!!!!");
           return;
         }
       
         //If all ok, send 201 response
-        res.status(201).send("User created");
+        res.status(201).send("Registro añadid");
 
     }
 

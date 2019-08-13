@@ -18,16 +18,16 @@ import { User } from "./User";
     @Column()
     fecha: Date;
 
-    @Column()
+    @Column({ type: "float" })
     peso: number;
 
-    @Column()
+    @Column({ type: "float" })
     grasa: number;
 
-    @Column()
+    @Column({ type: "float" })
     g_bisceral: number;
 
-    @Column()
+    @Column({ type: "float" })
     musculo: number;
 
     @ManyToOne(type => User, user => user.peso)
