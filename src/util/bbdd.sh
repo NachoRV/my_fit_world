@@ -1,5 +1,5 @@
 #!/bin/sh
-key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoibmFjaG8iLCJpYXQiOjE1NjU3MTQ2MjksImV4cCI6MTU2NTcxODIyOX0.AHB50y6V7WrT02X3nQD4XeBdtLLwcWHpIQB392MJVOs"
+key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE1NjYyMjk3MzYsImV4cCI6MTU2NjIzMzMzNn0.t2jEKPjWClYeliYBeZ_lMZxbAk0N1rDvzA-7tf5wJfY"
 ####Definimos lor parametros de conexion a la BBDD mysql
 SQL_HOST=localhost
 SQL_USER="root"
@@ -8,7 +8,7 @@ SQL_DATABASE="my_fit_world"
 ####Montamos los parametros de conexión.
 SQL_ARGS="-h $SQL_HOST -u $SQL_USER -p$SQL_PASSWORD -D $SQL_DATABASE -s -e"
 #### Montamos la sentencia SQL y la lanzamos
-mysql $SQL_ARGS "SELECT CURDATE();"
+# mysql $SQL_ARGS "SELECT CURDATE();"
 i=0
 while IFS=, read -r col1 col2 col3 col4 col5
 do
@@ -36,7 +36,7 @@ do
 
     curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" -H "auth: $key" -d \
     '{ "fecha": "'"$date"'", "peso": '$col2', "grasa": '$col3', "g_bisceral": '$col4', "musculo": '$col5' }'\
-    http://localhost:3000/rp/
+    http://vps713881.ovh.net:3000/rp/
 
 echo $?
 echo $date
@@ -45,5 +45,5 @@ let "i++"
    
    # mysql $SQL_ARGS "INSERT INTO registro_peso (fecha, userId, grasa, peso, g_bisceral, musculo) values ("$date",2,$col3, $col2, $col4, $col5)"
 
-done < src/util/Peso.1.csv
+done < ./Peso.1.csv
 

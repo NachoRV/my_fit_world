@@ -11,4 +11,7 @@ router.get("/", [checkJwt, checkRole(["ADMIN"])], RegistroPesoController.list);
 //Create a new user
 router.post("/", [checkJwt, checkRole(["ADMIN"])], RegistroPesoController.add);
 
+router.patch("/:id", [checkJwt, checkRole(["ADMIN"])], RegistroPesoController.editWeight);
+
+router.delete("/:id", [checkJwt, checkRole(["ADMIN"])], RegistroPesoController.deleteWeight);
 export default router;
