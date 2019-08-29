@@ -8,9 +8,15 @@ import {getConnection} from "typeorm";
 class RegistroPesoController {
 
     static list = async (req: Request, res: Response) => {
+      const id: number = res.locals.jwtPayload.userId;
         //Get users from database
         const userRepository = getRepository(Registro_peso);
-         const rp = await userRepository.find();
+        //const rp = await userRepository.find();
+        const rp = await getRepository(Registro_peso)
+        .createQueryBuilder()
+        .where("userId = :id", { id: id})
+        .getMany();
+
         res.send(rp);
       };
 
